@@ -2,7 +2,6 @@ def response_string
   '{"uid":"1129481062","info":{"name":"Chris Jewell"}}'
 end
 
-
 def sample_response_string
   <<-JSON
     {
