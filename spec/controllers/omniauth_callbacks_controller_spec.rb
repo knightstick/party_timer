@@ -5,7 +5,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
   describe 'GET spotify' do
     before :each do
       @request.env['devise.mapping'] = Devise.mappings[:user]
-      request.env['omniauth.auth'] = sample_response_string
+    #   request.env['omniauth.auth'] = sample_response_string
     end
 
     def expected_attributes
@@ -19,9 +19,14 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     end
 
     it 'creates a spotify profile with expected attributes' do
-      expect(Spotify::Profile).to receive(:create)
-        .with(expected_attributes).once
-      get :spotify
+      VCR.use_cassette(:spotify_login, record: :new_episodes) do
+        get :spotify
+        puts body = JSON.parse(response.body)
+        expect(response.status).to eq 200
+      end
+      # expect(Spotify::Profile).to receive(:create)
+      #   .with(expected_attributes).once
+      # get :spotify
     end
 
     let(:existing_user) { FactoryGirl.create(:user_with_spotify_profile) }

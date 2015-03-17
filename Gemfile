@@ -75,6 +75,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', require: false
+  gem 'vcr'
 end
 
 gem 'omniauth-spotify'

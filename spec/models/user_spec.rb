@@ -20,7 +20,16 @@
 #
 
 require 'rails_helper'
+require 'spotify_spec_helper'
 
 RSpec.describe User, type: :model do
-  it { should have_one(:spotify_profile).dependent(:destroy) }
+
+  describe 'Spotify callbacks' do
+
+    it 'creates a user from spotify' do
+      User.from_omniauth(sample_response_string)
+
+      expect(User.count).to eq 1
+    end
+  end
 end

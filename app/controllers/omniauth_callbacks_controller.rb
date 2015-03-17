@@ -1,6 +1,7 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def spotify
-    # response = auth_response_hash
+    # # response = auth_response_hash
+    # User.from_omniauth(request.env['omniauth.auth'])
     # uid = response.delete(:uid)
     # if User.find_by(uid: uid)
     #   # log that user in
@@ -9,7 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     #   Spotify::Profile.create(response)
     # end
     # # sign user in
-    # render json: request.env['omniauth.auth']
+    render json: { your_name_is: request.env['omniauth.auth'].as_json }
   end
 
   def auth_response_hash
