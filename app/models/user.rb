@@ -22,10 +22,10 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :omniauthable, omniauth_providers: [:spotify]
   # TODO: Decide which of these we need
-  # :database_authenticatable, :registerable,
-  # :recoverable, :rememberable, :trackable, :validatable,
+  devise :database_authenticatable, :registerable,
+  :recoverable, :rememberable, :trackable, :validatable,
+  :omniauthable, omniauth_providers: [:spotify]
 
   has_one :spotify_profile, dependent: :destroy, class: Spotify::Profile
 end

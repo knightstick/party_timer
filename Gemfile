@@ -66,6 +66,7 @@ group :development, :test do
 
   gem 'better_errors'
   gem 'pry-rails'
+  gem 'meta_request'
 
   gem 'annotate', '~> 2.6.5'
   gem 'letter_opener'
