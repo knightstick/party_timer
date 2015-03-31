@@ -27,9 +27,19 @@ class User < ActiveRecord::Base
   :recoverable, :rememberable, :trackable,
   :omniauthable, omniauth_providers: [:spotify]
 
-  has_one :spotify_profile, dependent: :destroy, class: Spotify::Profile
+  has_one :spotify_profile, dependent: :destroy, class_name: 'Spotify::Profile'
 
   def self.from_omniauth(auth)
-    fail
+    user = User.find_or_initialize_by(uid: auth.id)
+    user.update_attributes(
+      email: auth.info.email,
+      password: Devise.friendly_token[0, 20],
+      provider: 'spotify'
+    )
+    user
+  end
+
+  def password_required?
+    false
   end
 end

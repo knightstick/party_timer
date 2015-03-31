@@ -1,30 +1,14 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def spotify
     # # response = auth_response_hash
-    # User.from_omniauth(request.env['omniauth.auth'])
-    # uid = response.delete(:uid)
-    # if User.find_by(uid: uid)
-    #   # log that user in
-    # else
-    #   # create user and spotify profile
-    #   Spotify::Profile.create(response)
-    # end
-    # # sign user in
-    render json: { your_name_is: request.env['omniauth.auth'].as_json }
-  end
+    @user = User.from_omniauth(request.env['omniauth.auth'])
+    @user.spotify_profile = Spotify::Profile.from_omniauth(request.env['omniauth.auth'], @user)
 
-  def auth_response_hash
-    {
-      uid: omni_auth_json[:uid],
-      name: omni_auth_json[:info][:name],
-      image_url: omni_auth_json[:info][:image],
-      token: omni_auth_json[:credentials][:token],
-      refresh_token: omni_auth_json[:credentials][:refresh_token],
-      expires_at: omni_auth_json[:credentials][:expires_at]
-    }
-  end
-
-  def omni_auth_json
-    JSON.parse(request.env['omniauth.auth']).with_indifferent_access
+    if @user.persisted?
+      sign_in @user, event: :authentication
+      render json: @user
+    else
+      redirect_to new_user_session_path
+    end
   end
 end
