@@ -54,7 +54,7 @@ group :development, :test do
   # gem 'guard-spring'
   gem 'guard-livereload', require: false
   gem 'guard-bundler', require: false
-  gem 'guard-rubocop'
+  # gem 'guard-rubocop'
   gem 'quiet_assets'
 
   gem 'rspec-rails', '~> 3.0'
@@ -66,6 +66,7 @@ group :development, :test do
 
   gem 'better_errors'
   gem 'pry-rails'
+  gem 'meta_request'
 
   gem 'annotate', '~> 2.6.5'
   gem 'letter_opener'
@@ -74,4 +75,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', require: false
+  gem 'vcr'
 end
+
+gem 'omniauth-spotify'
