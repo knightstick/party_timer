@@ -11,7 +11,7 @@ def sample_response_string
       info: {
         name: "Isaac Norman",
         nickname: "1293837002",
-        email: null,
+        email: nil,
         urls: {
           spotify: "https://open.spotify.com/user/1293837002"
           },
